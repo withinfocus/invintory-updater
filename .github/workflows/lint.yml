@@ -20,8 +20,8 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       checks: write
-      pull-requests: write
       contents: write
+      pull-requests: write
 
     steps:
       - name: Checkout
