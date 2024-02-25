@@ -21,6 +21,7 @@ jobs:
     permissions:
       checks: write
       pull-requests: write
+      contents: write
 
     steps:
       - name: Checkout
@@ -68,5 +69,3 @@ jobs:
         with:
           branch: ${{ github.event.pull_request.head.ref || github.head_ref || github.ref }}
           commit_message: "Apply lint fixes"
-          commit_user_name: withinfocus
-          commit_user_email: matt@withinfocus.com
