@@ -15,8 +15,18 @@ using var scope = host.Services.CreateScope();
 
 var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
 
-var token = await RetrieveTokenAsync();
-if (token == null)
+User? user;
+try
+{
+    user = await AuthorizeAsync();
+}
+catch (Exception ex)
+{
+    logger.LogError(ex, "Failed to authorize.");
+    return -1;
+}
+
+if (user == null)
     return -1;
 
 if (args.Length == 0)
@@ -32,7 +42,7 @@ foreach (var arg in args)
         switch (arg)
         {
             case "ucp":
-                UpdateCollectionPrices();
+                await UpdateCollectionPricesAsync(user.CollectionId);
                 break;
         }
     }
@@ -44,7 +54,7 @@ foreach (var arg in args)
 
 return 0;
 
-async Task<string?> RetrieveTokenAsync()
+async Task<User?> AuthorizeAsync()
 {
     var refreshToken = hostBuilder.Configuration["RefreshToken"];
     if (string.IsNullOrEmpty(refreshToken) || refreshToken == "SECRET")
@@ -53,33 +63,53 @@ async Task<string?> RetrieveTokenAsync()
         return null;
     }
 
-    try
-    {
-        using HttpResponseMessage response = await httpClient.PostAsync(
-            $"https://securetoken.googleapis.com/v1/token?key={GoogleApiKey}",
-            new FormUrlEncodedContent(new Dictionary<string, string>
-            {
-                ["grant_type"] = "refresh_token",
-                ["refresh_token"] = refreshToken
-            }));
-        response.EnsureSuccessStatusCode();
-
-        var tokenResponse = await response.Content.ReadFromJsonAsync<Dictionary<string, string>>();
-        if (tokenResponse == null || tokenResponse["access_token"] == null)
+    using HttpResponseMessage tokenResponse = await httpClient.PostAsync(
+        $"https://securetoken.googleapis.com/v1/token?key={GoogleApiKey}",
+        new FormUrlEncodedContent(new Dictionary<string, string>
         {
-            return null;
-        }
+            ["grant_type"] = "refresh_token",
+            ["refresh_token"] = refreshToken
+        }));
+    tokenResponse.EnsureSuccessStatusCode();
 
-        return tokenResponse["access_token"];
-    }
-    catch (Exception ex)
+    var auth = await tokenResponse.Content.ReadFromJsonAsync<FirebaseAuthResponse>();
+    if (auth == null || auth.AccessToken == null || auth.UserId == null)
     {
-        logger.LogError(ex, "Failed to authorize.");
         return null;
     }
+
+    httpClient.DefaultRequestHeaders.Authorization = new(auth.AccessToken);
+
+    using HttpResponseMessage profileResponse = await httpClient.GetAsync(
+        $"https://api.invintorywines.com/v2/profiles/{auth.UserId}");
+    profileResponse.EnsureSuccessStatusCode();
+
+    var profile = await profileResponse.Content.ReadFromJsonAsync<ProfileResponse>();
+    if (profile == null || profile.CollectionId == null)
+    {
+        return null;
+    }
+
+    return new User
+    {
+        AccessToken = auth.AccessToken,
+        CollectionId = profile.CollectionId.Value
+    };
 }
 
-void UpdateCollectionPrices()
+async Task UpdateCollectionPricesAsync(int collectionId)
 {
+    using HttpResponseMessage collectionResponse = await httpClient.GetAsync(
+        $"https://api.invintorywines.com/v2/collections/{collectionId}?list_type=in_collection");
+    collectionResponse.EnsureSuccessStatusCode();
+
+    var collection = await collectionResponse.Content.ReadFromJsonAsync<CollectionResponse>();
+
     // TODO
+}
+
+class User
+{
+    public string? AccessToken { get; set; }
+    public int CollectionId { get; set; }
 }
