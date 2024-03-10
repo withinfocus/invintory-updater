@@ -111,7 +111,6 @@ async Task UpdateCollectionPricesAsync(int collectionId)
         return;
     }
 
-    // TODO
     foreach (var label in collection.Labels)
     {
         if (label.Bottles == null || !label.Bottles.Any())
@@ -119,11 +118,18 @@ async Task UpdateCollectionPricesAsync(int collectionId)
             continue;
         }
 
-        for(var bottle in label.Bottles)
+        foreach (var bottle in label.Bottles)
         {
-            if (!bottle.PurchasePrice.HasValue)
+            if (!bottle.PurchasePrice.HasValue && label.PriceAverageConverted.HasValue)
             {
-                bottle.PurchasePrice = label.PriceAverageUsd;
+                using HttpResponseMessage bottleUpdateResponse = await httpClient.PatchAsJsonAsync(
+                    $"https://api.invintorywines.com/v2/collections/{collectionId}/bottles",
+                    new
+                    {
+                        bottle_ids = new[] { bottle.Id },
+                        purchase_price = label.PriceAverageConverted
+                    });
+                bottleUpdateResponse.EnsureSuccessStatusCode();
             }
         }
     }
