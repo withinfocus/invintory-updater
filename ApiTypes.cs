@@ -71,9 +71,6 @@ public class Bottle
     [JsonPropertyName("cellar_id")]
     public int? CellarId { get; set; }
 
-    [JsonPropertyName("purchase_place")]
-    public object? PurchasePlace { get; set; }
-
     [JsonPropertyName("purchase_price")]
     public double? PurchasePrice { get; set; }
 
@@ -83,71 +80,17 @@ public class Bottle
     [JsonPropertyName("server_purchase_price")]
     public double? ServerPurchasePrice { get; set; }
 
-    [JsonPropertyName("purchase_date")]
-    public object? PurchaseDate { get; set; }
-
-    [JsonPropertyName("from_year_drink_window")]
-    public object? FromYearDrinkWindow { get; set; }
-
-    [JsonPropertyName("to_year_drink_window")]
-    public object? ToYearDrinkWindow { get; set; }
-
     [JsonPropertyName("bottle_size")]
     public string? BottleSize { get; set; }
 
-    [JsonPropertyName("tasting_notes")]
-    public object? TastingNotes { get; set; }
-
-    [JsonPropertyName("personal_notes")]
-    public object? PersonalNotes { get; set; }
-
-    [JsonPropertyName("custom_bin_location")]
-    public object? CustomBinLocation { get; set; }
-
-    [JsonPropertyName("metadata")]
-    public object? Metadata { get; set; }
-
     [JsonPropertyName("is_consumed")]
     public bool? IsConsumed { get; set; }
-
-    [JsonPropertyName("consumed_at")]
-    public object? ConsumedAt { get; set; }
-
-    [JsonPropertyName("consumed_notes")]
-    public object? ConsumedNotes { get; set; }
-
-    [JsonPropertyName("removal_type")]
-    public object? RemovalType { get; set; }
-
-    [JsonPropertyName("removal_date")]
-    public object? RemovalDate { get; set; }
-
-    [JsonPropertyName("removal_note")]
-    public object? RemovalNote { get; set; }
-
-    [JsonPropertyName("in_transit")]
-    public bool? InTransit { get; set; }
-
-    [JsonPropertyName("delivery_date")]
-    public object? DeliveryDate { get; set; }
-
-    [JsonPropertyName("delivery_reminder_id")]
-    public object? DeliveryReminderId { get; set; }
 
     [JsonPropertyName("added_by")]
     public string? AddedBy { get; set; }
 
     [JsonPropertyName("last_edited_by")]
     public string? LastEditedBy { get; set; }
-
-    [JsonPropertyName("consumption_activity_id")]
-    public object? ConsumptionActivityId { get; set; }
-
-    [JsonPropertyName("location_id")]
-    public object? LocationId { get; set; }
-
-    [JsonPropertyName("delivery_id")]
-    public object? DeliveryId { get; set; }
 
     [JsonPropertyName("barcode")]
     public string? Barcode { get; set; }
@@ -161,9 +104,6 @@ public class Bottle
     [JsonPropertyName("updated_at")]
     public DateTime? UpdatedAt { get; set; }
 
-    [JsonPropertyName("import_bottle_id")]
-    public object? ImportBottleId { get; set; }
-
     [JsonPropertyName("created_at")]
     public DateTime? CreatedAt { get; set; }
 
@@ -173,14 +113,8 @@ public class Bottle
     [JsonPropertyName("cellar")]
     public Cellar? Cellar { get; set; }
 
-    [JsonPropertyName("location")]
-    public object? Location { get; set; }
-
     [JsonPropertyName("tags")]
     public List<object>? Tags { get; set; }
-
-    [JsonPropertyName("place")]
-    public object? Place { get; set; }
 }
 
 public class Label
@@ -197,44 +131,17 @@ public class Label
     [JsonPropertyName("created_by")]
     public string? CreatedBy { get; set; }
 
-    [JsonPropertyName("name")]
-    public object? Name { get; set; }
-
     [JsonPropertyName("from_year_drink_window")]
     public int? FromYearDrinkWindow { get; set; }
 
     [JsonPropertyName("to_year_drink_window")]
     public int? ToYearDrinkWindow { get; set; }
 
-    [JsonPropertyName("abv")]
-    public object? Abv { get; set; }
-
-    [JsonPropertyName("price_average")]
-    public object? PriceAverage { get; set; }
-
-    [JsonPropertyName("price_average_usd")]
-    public object? PriceAverageUsd { get; set; }
-
-    [JsonPropertyName("price_average_currency")]
-    public object? PriceAverageCurrency { get; set; }
-
-    [JsonPropertyName("price_average_magnum")]
-    public object? PriceAverageMagnum { get; set; }
-
-    [JsonPropertyName("price_average_magnum_usd")]
-    public object? PriceAverageMagnumUsd { get; set; }
-
-    [JsonPropertyName("price_average_magnum_currency")]
-    public object? PriceAverageMagnumCurrency { get; set; }
-
     [JsonPropertyName("image_url")]
     public string? ImageUrl { get; set; }
 
     [JsonPropertyName("thumbnail_url")]
     public string? ThumbnailUrl { get; set; }
-
-    [JsonPropertyName("assigned_to_location_at")]
-    public object? AssignedToLocationAt { get; set; }
 
     [JsonPropertyName("created_at")]
     public DateTime? CreatedAt { get; set; }
@@ -254,9 +161,6 @@ public class Label
     [JsonPropertyName("ws_score")]
     public int? WsScore { get; set; }
 
-    [JsonPropertyName("back_label_image_url")]
-    public object? BackLabelImageUrl { get; set; }
-
     [JsonPropertyName("wmj_id")]
     public int? WmjId { get; set; }
 
@@ -265,12 +169,6 @@ public class Label
 
     [JsonPropertyName("wmj_price_last_fetched")]
     public DateTime? WmjPriceLastFetched { get; set; }
-
-    [JsonPropertyName("shop_url")]
-    public object? ShopUrl { get; set; }
-
-    [JsonPropertyName("synced_to_perfect_label")]
-    public object? SyncedToPerfectLabel { get; set; }
 
     [JsonPropertyName("ws_details_fetched")]
     public DateTime? WsDetailsFetched { get; set; }
@@ -305,50 +203,11 @@ public class Label
     [JsonPropertyName("price_average_converted")]
     public double? PriceAverageConverted { get; set; }
 
-    [JsonPropertyName("collector_price_average_converted")]
-    public object? CollectorPriceAverageConverted { get; set; }
-
-    [JsonPropertyName("collector_price_average_magnum_converted")]
-    public object? CollectorPriceAverageMagnumConverted { get; set; }
-
     [JsonPropertyName("wine")]
     public Wine? Wine { get; set; }
 
-    [JsonPropertyName("custom_label_information")]
-    public object? CustomLabelInformation { get; set; }
-
     [JsonPropertyName("custom_fields")]
     public List<object>? CustomFields { get; set; }
-
-    [JsonPropertyName("collector_from_year_drink_window")]
-    public object? CollectorFromYearDrinkWindow { get; set; }
-
-    [JsonPropertyName("collector_to_year_drink_window")]
-    public object? CollectorToYearDrinkWindow { get; set; }
-
-    [JsonPropertyName("collector_image_url")]
-    public object? CollectorImageUrl { get; set; }
-
-    [JsonPropertyName("collector_thumbnail_url")]
-    public object? CollectorThumbnailUrl { get; set; }
-
-    [JsonPropertyName("collector_name")]
-    public object? CollectorName { get; set; }
-
-    [JsonPropertyName("collector_price_average")]
-    public object? CollectorPriceAverage { get; set; }
-
-    [JsonPropertyName("collector_price_average_currency")]
-    public object? CollectorPriceAverageCurrency { get; set; }
-
-    [JsonPropertyName("collector_price_average_magnum")]
-    public object? CollectorPriceAverageMagnum { get; set; }
-
-    [JsonPropertyName("collector_price_average_magnum_currency")]
-    public object? CollectorPriceAverageMagnumCurrency { get; set; }
-
-    [JsonPropertyName("collector_abv")]
-    public object? CollectorAbv { get; set; }
 }
 
 public class Producer
@@ -370,9 +229,6 @@ public class Producer
 
     [JsonPropertyName("latitude")]
     public double? Latitude { get; set; }
-
-    [JsonPropertyName("background_image_url")]
-    public object? BackgroundImageUrl { get; set; }
 
     [JsonPropertyName("elastic_last_synced")]
     public DateTime? ElasticLastSynced { get; set; }
@@ -443,9 +299,6 @@ public class Wine
     [JsonPropertyName("color")]
     public string? Color { get; set; }
 
-    [JsonPropertyName("livex_wine_type")]
-    public object? LivexWineType { get; set; }
-
     [JsonPropertyName("livex_wine_name")]
     public string? LivexWineName { get; set; }
 
@@ -455,26 +308,17 @@ public class Wine
     [JsonPropertyName("livex_display_name_type")]
     public string? LivexDisplayNameType { get; set; }
 
-    [JsonPropertyName("parcel")]
-    public object? Parcel { get; set; }
-
     [JsonPropertyName("subtype")]
     public string? Subtype { get; set; }
 
     [JsonPropertyName("classification")]
     public string? Classification { get; set; }
 
-    [JsonPropertyName("synced_to_perfect_label")]
-    public object? SyncedToPerfectLabel { get; set; }
-
     [JsonPropertyName("maturation")]
     public string? Maturation { get; set; }
 
     [JsonPropertyName("dosage")]
     public string? Dosage { get; set; }
-
-    [JsonPropertyName("method")]
-    public object? Method { get; set; }
 
     [JsonPropertyName("vineyard_notes")]
     public string? VineyardNotes { get; set; }

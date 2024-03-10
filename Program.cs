@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using System.Net;
 using System.Net.Http.Json;
 
 const string GoogleApiKey = "***REMOVED***";
@@ -104,8 +105,28 @@ async Task UpdateCollectionPricesAsync(int collectionId)
     collectionResponse.EnsureSuccessStatusCode();
 
     var collection = await collectionResponse.Content.ReadFromJsonAsync<CollectionResponse>();
+    if (collection == null || collection.Labels == null || !collection.Labels.Any())
+    {
+        logger.LogInformation("Nothing in collection to update.");
+        return;
+    }
 
     // TODO
+    foreach (var label in collection.Labels)
+    {
+        if (label.Bottles == null || !label.Bottles.Any())
+        {
+            continue;
+        }
+
+        for(var bottle in label.Bottles)
+        {
+            if (!bottle.PurchasePrice.HasValue)
+            {
+                bottle.PurchasePrice = label.PriceAverageUsd;
+            }
+        }
+    }
 }
 
 class User
