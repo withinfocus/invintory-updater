@@ -2,10 +2,8 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using System.Net;
 using System.Net.Http.Json;
 
-const string GoogleApiKey = "***REMOVED***";
 var httpClient = new HttpClient();
 
 var hostBuilder = Host.CreateApplicationBuilder(args);
@@ -64,8 +62,15 @@ async Task<User?> AuthorizeAsync()
         return null;
     }
 
+    var googleApiKey = hostBuilder.Configuration["GoogleApiKey"];
+    if (string.IsNullOrEmpty(googleApiKey) || googleApiKey == "SECRET")
+    {
+        logger.LogError("No Google API key secret provided.");
+        return null;
+    }
+
     using HttpResponseMessage tokenResponse = await httpClient.PostAsync(
-        $"https://securetoken.googleapis.com/v1/token?key={GoogleApiKey}",
+        $"https://securetoken.googleapis.com/v1/token?key={googleApiKey}",
         new FormUrlEncodedContent(new Dictionary<string, string>
         {
             ["grant_type"] = "refresh_token",
