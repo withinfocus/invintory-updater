@@ -363,5 +363,6 @@ MigrationBackup/
 # Built Visual Studio Code Extensions
 *.vsix
 
-# MegaLinter reports
+# MegaLinter reports and caches
 megalinter-reports/
+CSharpier/.formattingCache
